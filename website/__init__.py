@@ -12,7 +12,7 @@ def create_app():
 
     # local for testing purposes
     # using local default mysql connection with specified db(already created)
-    local = True
+    local = False
     if local:
         db_host = config.db_host_local
         db_name = config.db_name_local
