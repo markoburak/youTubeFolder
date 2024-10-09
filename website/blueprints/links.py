@@ -2,6 +2,8 @@ import datetime
 import json
 import urllib
 
+import pytube.exceptions
+from pytube import YouTube
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from website.models import Category, YouTubeLink
 from website import db
@@ -40,22 +42,22 @@ def add_link(category_id):
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
-            if "?v=" in url:
-                youtube_id = url.split("?v=")[1].split("&")[0]
-            else:
+            if "?v=" not in url:
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
-            # get additional info, such as title
-            params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % youtube_id}
-            base_url = "https://www.youtube.com/oembed"
-            query_string = urllib.parse.urlencode(params)
-            base_url = base_url + "?" + query_string
+            try:
+                yt_play = YouTube(url)
+            except pytube.exceptions.RegexMatchError:
+                flash('Provided unsupported link!', category='error')
+                return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
-            with urllib.request.urlopen(base_url) as response:
-                response_text = response.read()
-                data = json.loads(response_text.decode())
-                title = data['title']
+            if not yt_play.title or not yt_play.video_id:
+                flash('Provided unsupported link!', category='error')
+                return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
+
+            title = yt_play.title
+            youtube_id = yt_play.video_id
 
             processed_url = f"https://www.youtube.com/watch?v={youtube_id}"
 
