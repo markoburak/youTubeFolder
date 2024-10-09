@@ -1,0 +1,56 @@
+.image-wrapper {
+  display: inline-block;
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.image-wrapper:hover {
+  transform: scale(1.05); /* Both image and text will scale together */
+}
+
+.gallery img {
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.gallery span {
+  transition: transform 0.3s ease;
+}
+
+.input-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-section input[type="text"] {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  min-width: 300px;
+  outline: none;
+  min-height: 50px;
+  margin-left: 20px;
+}
+
+.input-section button {
+  border-radius: 20px;
+  margin-left: 30px;
+  min-height: 50px;
+}
+
+.delete-btn {
+  opacity: 1 !important; /* In case it was faded due to being disabled */
+  pointer-events: auto !important; /* Ensures the button is clickable */
+  cursor: pointer; /* Ensures the pointer is visible */
+}
+
+.min_above_footer_height {
+  min-height: 100px;
+}
+
+@media (min-width: 768px) {
+  .width_not_mobile {
+      width: 100%;
+  }
+}

@@ -1,0 +1,26 @@
+.login_spacing {
+    letter-spacing: 5px;
+}
+
+.login_little_spacing {
+    letter-spacing: 3px;
+}
+
+.login_little_bold {
+    font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+    .login_spacing {
+        letter-spacing: 3px;
+    }
+
+    .login_little_spacing {
+        letter-spacing: 1px;
+    }
+
+    .login_little_bold {
+        font-weight: 500;
+    }
+}

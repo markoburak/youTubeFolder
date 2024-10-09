@@ -1,0 +1,29 @@
+body {
+    background-color: #f8f9fa;
+}
+.card {
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card_min_height {
+  height: 250px;
+}
+
+.icon-large {
+    font-size: 60px;
+    color: #6c757d;
+}
+
+.simple-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.footer-padding {
+    padding-bottom: 150px;
+}

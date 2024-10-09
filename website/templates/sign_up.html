@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block optionalCSS %}
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+{% endblock %}
+{% block title %}Login page{% endblock %}
+
+{% block content %}
+    <div class="bg-secondary ninety-five pt-5">
+        <div class="container p-5 bg-dark">
+            <form action="/sign_up" method="POST" id="sign_up">
+              <h3 align="center" class="text-white login_little_spacing">Sign up</h3>
+              <div class="form-group mb-3">
+                <label class="text-white login_little_spacing" for="email">Email Address</label>
+                <input
+                  value="{{def_email}}"
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Enter email"
+                />
+              </div>
+                <div class="form-group mb-3">
+                <label class="text-white login_little_spacing" for="firstName">First Name</label>
+                <input
+                  value="{{def_first_name}}"
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="Enter first name"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="text-white login_little_spacing" for="lastName">Last Name</label>
+                <input
+                  value="{{def_last_name}}"
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Enter last name"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="text-white login_little_spacing" for="password1">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password1"
+                  name="password1"
+                  placeholder="Enter password"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="text-white login_little_spacing" for="password2">Confirm Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password2"
+                  name="password2"
+                  placeholder="Confirm password"
+                />
+              </div>
+            </form>
+            <div class="row align-items-end mt-4">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <button type="submit" class="btn btn-primary w-50 py-2 rounded-pill login_spacing login_little_bold" form="sign_up">SIGN UP</button>
+                </div>
+            </div>
+            <div class="row align-items-end mt-3 login_little_spacing">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <p class="text-white">Already have the account?&nbsp;&nbsp;</p><a class="text-decoration-none text-reset" href="/login"><span class="text-white login_little_bold"><u>LOGIN</u></span></a>
+                </div>
+            </div>
+<!--            <div class="row align-items-end mt-4">-->
+<!--                <div class="col-6">-->
+<!--                    <button type="submit" class="btn btn-primary" form="sign_up">Sign up</button>-->
+<!--                </div>-->
+<!--                <div class="col-6 d-flex align-items-end justify-content-end">-->
+<!--                    <span class="align-bottom text-white">Already have an account?</span>-->
+<!--                    <a class="text-decoration-none text-reset ms-4" href="/login"><button class="btn btn-secondary">Back to login</button></a>-->
+<!--                </div>-->
+<!--              </div>-->
+        </div>
+    </div>
+{% endblock %}

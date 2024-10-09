@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}User details{% endblock %}
+
+{% block content %}
+<div class="bg-secondary ninety-five">
+    <div class="container mb-5 md-md-0">
+        <br>
+        <form action="/user_details" method="POST" id="user_details_form">
+          <div class="row">
+            <div class="col">
+              <label class="text-white" for="first_name">First Name</label>
+              <input name="first_name" id="first_name" type="text" class="form-control" placeholder="First name" value="{{user.first_name}}">
+            </div>
+            <div class="col">
+              <label class="text-white" for="last_name">Last Name</label>
+              <input name="last_name" id="last_name" type="text" class="form-control" placeholder="Last name" value="{{user.last_name}}">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label class="text-white" for="email">Email</label>
+              <input name="email" id="email" type="email" class="form-control" placeholder="Email" value="{{user.email}}">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+                <button class="btn btn-success" type="submit" form="user_details_form">Update info</button>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
