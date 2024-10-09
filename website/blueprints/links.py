@@ -42,22 +42,33 @@ def add_link(category_id):
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
-            if "?v=" not in url:
+            if "?v=" in url:
+                youtube_id = url.split("?v=")[1].split("&")[0]
+            else:
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
-            try:
-                yt_play = YouTube(url)
-            except pytube.exceptions.RegexMatchError:
+            if len(youtube_id) != 11:
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
-            if not yt_play.title or not yt_play.video_id:
-                flash('Provided unsupported link!', category='error')
-                return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
-
-            title = yt_play.title
-            youtube_id = yt_play.video_id
+            # Ideal solution but for the paid pythonanywhere version
+            # if "?v=" not in url:
+            #     flash('Provided unsupported link!', category='error')
+            #     return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
+            #
+            # try:
+            #     yt_play = YouTube(url)
+            # except pytube.exceptions.RegexMatchError:
+            #     flash('Provided unsupported link!', category='error')
+            #     return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
+            #
+            # if not yt_play.title or not yt_play.video_id:
+            #     flash('Provided unsupported link!', category='error')
+            #     return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
+            #
+            # title = yt_play.title
+            # youtube_id = yt_play.video_id
 
             processed_url = f"https://www.youtube.com/watch?v={youtube_id}"
 
