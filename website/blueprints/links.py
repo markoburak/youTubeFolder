@@ -103,3 +103,20 @@ def remove_link(link_id):
 @login_required
 def back_to_category():
     return redirect(url_for('category_view.index'))
+
+@links_view.route("/update_link/<int:link_id>", methods=["POST"])
+@login_required
+def update_link(link_id):
+    # Find the link by ID and ensure it belongs to the current user
+    link_to_update = YouTubeLink.query.filter_by(id=link_id).first()
+    category_id = link_to_update.category_id
+
+    if link_to_update:
+        title_to_update = request.form.get('link_update_name')
+        link_to_update.title = title_to_update
+        db.session.commit()
+        # flash('Category updated!', category='success')
+    else:
+        flash('Category not found!', category='error')
+
+    return redirect(url_for('links_view.youTubeLinks', category_id=category_id))

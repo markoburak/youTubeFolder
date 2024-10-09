@@ -68,7 +68,6 @@ def update_category(category_id):
 
     if category_to_update:
         name_to_update = request.form.get('category_update_name')
-        # Remove the category from the database
         category_to_update.name = name_to_update
         db.session.commit()
         # flash('Category updated!', category='success')
