@@ -5,29 +5,36 @@
 {% block title %}Links{% endblock %}
 
 {% block content %}
-<div class="bg-secondary pt-5 ninety-five">
-  <div class="container d-flex p-0 p-md-2">
+<div class="bg-secondary pt-3 ninety-five">
+  <div class="container d-flex pb-2">
     <div class="row w-100 d-flex align-items-center justify-content-center">
-        <!-- Back Button on the left side -->
-        <div class="col-2 text-start d-none d-md-block">
-            <a href="/back_to_category" class="btn btn-light">
-                <i class="bi bi-arrow-left"></i>
-            </a>
+        <div class="col-12 d-flex justify-content-center">
+            <h1 class="text-white"><u>{{ category.name }}</u></h1>
         </div>
-
-        <!-- Input field in the center -->
-        <div class="col-8 d-flex justify-content-center">
-          <form action="/add_link/{{ category.id }}" method="POST" id="addLinkForm">
-            <div class="input-section">
-              <input type="text" class="form-control" name="url" id="addLinkInput" form="addLinkForm" placeholder="Enter image URL">
-              <button type="submit" class="btn btn-success ml-auto">Save</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Empty space for right alignment, keeping center balanced -->
-        <div class="col-2 d-none d-md-block"></div>
     </div>
+  </div>
+  <div class="container d-flex p-0 p-md-2">
+        <div class="row w-100 d-flex align-items-center justify-content-center">
+            <!-- Back Button on the left side -->
+            <div class="col-2 text-start d-none d-md-block">
+                <a href="/back_to_category" class="btn btn-light">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="col-8 d-flex justify-content-center">
+              <form action="/add_link/{{ category.id }}" method="POST" id="addLinkForm">
+                <div class="input-section">
+                  <input type="text" class="form-control" name="url" id="addLinkInput" form="addLinkForm" placeholder="Enter image URL">
+                  <button type="submit" class="btn btn-success ml-auto">Save</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Empty space for right alignment, keeping center balanced -->
+            <div class="col-2 d-none d-md-block"></div>
+        </div>
   </div>
 
   <!-- Image Gallery -->

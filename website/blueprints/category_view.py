@@ -1,11 +1,10 @@
 import datetime
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from website.models import User, Category
+from website.models import Category, YouTubeLink
 from website import db
-from sqlalchemy import or_
+from sqlalchemy.sql import func
 from flask_login import login_required, current_user
-import re
 
 category_view = Blueprint('category_view', __name__)
 
@@ -13,8 +12,17 @@ category_view = Blueprint('category_view', __name__)
 @category_view.route("/", methods=["GET"])
 @login_required
 def index():
-    categories = Category.query.filter_by(user_id=current_user.id).order_by(Category.created_date)
-    return render_template("main.html", user=current_user, categories=categories)
+    categories = (
+        db.session.query(Category, func.count(YouTubeLink.id))
+        .outerjoin(YouTubeLink, YouTubeLink.category_id == Category.id)
+        .filter(Category.user_id == current_user.id)
+        .group_by(Category.id)
+        .order_by(Category.created_date)
+        .all()
+    )
+    links_by_category = [{"Category": category, "Link_sum": link_count} for category, link_count in categories]
+
+    return render_template("main.html", user=current_user, categories=links_by_category)
 
 
 @category_view.route("/add_category", methods=["POST"])

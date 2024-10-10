@@ -14,23 +14,23 @@
                         <div class="card card_min_height border-0 shadow-sm position-relative">
                             <div class="card-body text-center d-flex flex-column">
                                 <!-- Delete Button at the top-right corner -->
-                                <a class="simple-link" href="/links/{{ category.id }}">
+                                <a class="simple-link" href="/links/{{ category['Category'].id }}">
                                     <i class="fas fa-folder icon-large mb-3"></i>
                                 </a>
 
-                                <button type="button" class="btn-close delete-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category.id }}"></button>
-
-                                <h5 class="card-title">{{ category.name }}</h5>
-                                <p class="card-text mb-4">{{ category.created_date }}</p>
+                                <button type="button" class="btn-close delete-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category['Category'].id }}"></button>
+                                <span class="position-absolute rounded-pill top-0 start-0 badge bg-secondary ms-2 mt-2">{{ category['Link_sum'] }}</span>
+                                <h5 class="card-title">{{ category['Category'].name }}</h5>
+                                <p class="card-text mb-4">{{ category['Category'].created_date }}</p>
 
                                 <!-- Buttons: Open Category and Edit Button -->
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="position-relative">
                                         <!-- Centered Open Category Button -->
-                                        <a href="/links/{{ category.id }}" class="btn btn-primary d-inline-block mx-auto mt-auto">Open Category</a>
+                                        <a href="/links/{{ category['Category'].id }}" class="btn btn-primary d-inline-block mx-auto mt-auto">Open Category</a>
 
                                         <!-- Edit Button very close to the right of Open Category Button -->
-                                        <a data-bs-toggle="modal" data-bs-target="#updateModal{{ category.id }}" class="btn btn-light border position-absolute top-50 translate-middle-y" style="right: -50px; width: 40px; height: 40px;" title="Edit Category">
+                                        <a data-bs-toggle="modal" data-bs-target="#updateModal{{ category['Category'].id }}" class="btn btn-light border position-absolute top-50 translate-middle-y" style="right: -50px; width: 40px; height: 40px;" title="Edit Category">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </div>
@@ -40,17 +40,17 @@
                     </div>
 
                     <!-- Update Confirmation Modal -->
-                    <div class="modal fade" id="updateModal{{ category.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ category.id }}" aria-hidden="true">
-                        <form action="/update_category/{{ category.id }}" method="POST" id="updateForm{{ category.id }}">
+                    <div class="modal fade" id="updateModal{{ category['Category'].id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ category['Category'].id }}" aria-hidden="true">
+                        <form action="/update_category/{{ category['Category'].id }}" method="POST" id="updateForm{{ category['Category'].id }}">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel{{ category.id }}">Confirm Update</h5>
+                                        <h5 class="modal-title" id="updateModalLabel{{ category['Category'].id }}">Confirm Update</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <p>Change the name of the category.</p>
-                                        <input type="text" class="form-control" name="category_update_name" id="category_update_name" form="updateForm{{ category.id }}" value="{{category.name}}">
+                                        <input type="text" class="form-control" name="category_update_name" id="category_update_name" form="updateForm{{ category['Category'].id }}" value="{{category['Category'].name}}">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -62,12 +62,12 @@
                     </div>
 
                     <!-- Delete Confirmation Modal -->
-                    <div class="modal fade" id="deleteModal{{ category.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ category.id }}" aria-hidden="true">
-                        <form action="/remove_category/{{ category.id }}" method="POST">
+                    <div class="modal fade" id="deleteModal{{ category['Category'].id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ category['Category'].id }}" aria-hidden="true">
+                        <form action="/remove_category/{{ category['Category'].id }}" method="POST">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel{{ category.id }}">Delete "{{ category.name }}"</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel{{ category['Category'].id }}">Delete "{{ category['Category'].name }}"</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
