@@ -22,7 +22,13 @@ def index():
     )
     links_by_category = [{"Category": category, "Link_sum": link_count} for category, link_count in categories]
 
-    return render_template("main.html", user=current_user, categories=links_by_category)
+    links_by_category_sorted = sorted(
+        links_by_category,
+        key=lambda x: x['Category'].starred,
+        reverse=True
+    )
+
+    return render_template("main.html", user=current_user, categories=links_by_category_sorted)
 
 
 @category_view.route("/add_category", methods=["POST"])
@@ -79,6 +85,21 @@ def update_category(category_id):
         category_to_update.name = name_to_update
         db.session.commit()
         # flash('Category updated!', category='success')
+    else:
+        flash('Category not found!', category='error')
+
+    return redirect(url_for('category_view.index'))
+
+@category_view.route("/update_star/<int:category_id>", methods=["POST"])
+@login_required
+def update_star(category_id):
+    # Find the category by ID and ensure it belongs to the current user
+    category_to_update = Category.query.filter_by(id=category_id, user_id=current_user.id).first()
+
+    if category_to_update:
+        value_to_update = request.form.get('starClicked')
+        category_to_update.starred = value_to_update.lower() == "true"
+        db.session.commit()
     else:
         flash('Category not found!', category='error')
 

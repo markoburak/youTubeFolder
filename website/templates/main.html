@@ -18,8 +18,20 @@
                                     <i class="fas fa-folder icon-large mb-3"></i>
                                 </a>
 
-                                <button type="button" class="btn-close delete-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category['Category'].id }}"></button>
+                                <button type="button" class="btn-close delete-btn position-absolute bottom-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category['Category'].id }}"></button>
                                 <span class="position-absolute rounded-pill top-0 start-0 badge bg-secondary ms-2 mt-2">{{ category['Link_sum'] }}</span>
+
+                                <form action="/update_star/{{ category['Category'].id }}" method="POST" id="starForm{{ category['Category'].id }}">
+                                  <!-- Star Button -->
+                                  {% if not category['Category'].starred %}
+                                      <button type="submit" class="star-btn position-absolute top-0 end-0 m-2" id="starBtnEmpty{{ category['Category'].id }}"><img class="empty_star ml-auto" src="{{ url_for('static',filename='img/emptyStar.png') }}"></button>
+                                      <input type="hidden" name="starClicked" id="starClickedEmpty{{ category['Category'].id }}" value="true">
+                                  {% else %}
+                                      <button type="submit" class="star-btn position-absolute top-0 end-0 m-2" id="starBtnFilled{{ category['Category'].id }}"><img class="star ml-auto" src="{{ url_for('static',filename='img/filledStar.png') }}"></button>
+                                      <input type="hidden" name="starClicked" id="starClickedFilled{{ category['Category'].id }}" value="false">
+                                  {% endif %}
+                                </form>
+
                                 <h5 class="card-title">{{ category['Category'].name }}</h5>
                                 <p class="card-text mb-4">{{ category['Category'].created_date }}</p>
 

@@ -27,3 +27,20 @@ body {
 .footer-padding {
     padding-bottom: 150px;
 }
+
+.star-btn {
+  margin: 0px;
+  padding: 0px;
+  background: none;
+  border: none;
+  color: transparent;
+  -webkit-text-stroke: 1px black;
+}
+
+.star {
+    max-width: 24px;
+}
+
+.empty_star {
+    max-width: 22px;
+}

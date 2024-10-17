@@ -19,6 +19,7 @@ class Category(db.Model):
     __tablename__ = "Category"
 
     id = db.Column(db.Integer, primary_key=True)
+    starred = db.Column(db.Boolean, default=False)
     name = db.Column(db.String(50))
     created_date = db.Column(db.Date(), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
