@@ -38,12 +38,14 @@ def add_link(category_id):
             img_url = ""
 
             # add the link img testing
-            if "www.youtube.com" not in url:
+            if "youtube.com" not in url and "youtu.be" not in url:
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
 
             if "?v=" in url:
                 youtube_id = url.split("?v=")[1].split("&")[0]
+            elif "youtu.be" in url:
+                youtube_id = url.split("youtu.be/")[1].split("?")[0]
             else:
                 flash('Provided unsupported link!', category='error')
                 return redirect((url_for('links_view.youTubeLinks', category_id=category_id)))
