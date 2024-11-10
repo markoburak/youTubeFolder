@@ -26,9 +26,8 @@ def user_details_get():
             else:
                 try:
                     db.session.commit()
-                    flash('Updated user data!', category='success')
                 except:
                     flash('Something didn\'t work', category='error')
         else:
             flash('Cannot update the user!', category='error')
-        return redirect(url_for('user_details_bp.user_details'))
+        return redirect(url_for('user_details.user_details_get'))
