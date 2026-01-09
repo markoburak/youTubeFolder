@@ -9,38 +9,257 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+.navbar-toggler {
+    position: relative;
+    z-index: 1050 !important;
+}
+
+.navbar {
+    z-index: 1040 !important;
+}
+
+.navbar-collapse {
+    z-index: 1030 !important;
+}
+
+/* Enhanced card styling with hover effects */
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2) !important;
+}
+
+.card-hover:hover .icon-large {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Add category card styling */
+.card-hover-add {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    min-height: 340px;
+}
+
+.card-hover-add:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15) !important;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+}
+
+.card-hover-add .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Modern button styling */
+.btn-modern {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.5rem;
+}
+
+.btn-primary.btn-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+}
+
+.btn-primary.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    background: linear-gradient(135deg, #5568d3 0%, #6a3a8a 100%);
+    color: white;
+}
+
+.btn-success.btn-modern {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+    color: white;
+}
+
+.btn-success.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3);
+    background: linear-gradient(135deg, #0e7d6b 0%, #2dbe6a 100%);
+    color: white;
+}
+
+/* Edit button styling */
+.btn-edit {
+    transition: all 0.3s ease;
+    background: white;
+    border: 1px solid #e0e0e0;
+}
+
+.btn-edit:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.1);
+    border-color: #667eea;
+}
+
+/* Card title and text styling */
+.card-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+    color: #2d3748;
+}
+
+.card-text {
+    font-size: 0.85rem;
+    color: #718096;
+}
+
+/* Minimum height for cards */
 .card_min_height {
-  height: 250px;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.button-container {
+    width: 100%;
+}
+
+/* Badge styling */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.bg-primary.badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/* Icon styling */
 .icon-large {
-    font-size: 60px;
-    color: #6c757d;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 3.5rem;
 }
 
+.card-hover-add .icon-large {
+    font-size: 4rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+/* Smooth transitions for emoji links */
 .simple-link {
     text-decoration: none;
     color: inherit;
-    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+/* Footer padding */
 .footer-padding {
-    padding-bottom: 150px;
+    padding-bottom: 2rem;
 }
 
+/* Star button styling */
 .star-btn {
-  margin: 0px;
-  padding: 0px;
-  background: none;
-  border: none;
-  color: transparent;
-  -webkit-text-stroke: 1px black;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
 
-.star {
-    max-width: 24px;
+.star-btn:hover {
+    transform: scale(1.15);
+}
+
+.star-btn img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .empty_star {
-    max-width: 22px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.star-btn:hover .empty_star {
+    opacity: 1;
+}
+
+.star {
+    filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.4));
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-hover:hover {
+        transform: translateY(-4px);
+    }
+
+    .btn-modern {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card_min_height {
+        min-height: 300px;
+    }
 }

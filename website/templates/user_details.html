@@ -1,8 +1,11 @@
 {% extends "base.html" %}
+{% block optionalCSS %}
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/account.css') }}">
+{% endblock %}
 {% block title %}User details{% endblock %}
 
 {% block content %}
-<div class="bg-secondary ninety-five">
+<div class="bg-secondary bg-gradient-modern min-height-95-90 d-flex align-items-center">
     <div class="container mb-5 md-md-0">
         <br>
         <form action="/user_details" method="POST" id="user_details_form">

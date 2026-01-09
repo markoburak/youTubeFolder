@@ -5,44 +5,52 @@
 {% block title %}Main{% endblock %}
 
 {% block content %}
-        <div class="d-flex justify-content-center align-items-center bg-secondary ninety-five">
-            <div class="container mt-5">
+        <div class="d-flex justify-content-center align-items-center bg-gradient-modern ninety-five">
+            <div class="container mt-5 mb-5">
                 <div class="row justify-content-center">
                     {% for category in categories %}
                     <!-- Default Category Card -->
                     <div class="col-md-4 mb-4">
-                        <div class="card card_min_height border-0 shadow-sm position-relative">
+                        <div class="card card_min_height border-0 shadow-lg position-relative card-hover">
                             <div class="card-body text-center d-flex flex-column">
-                                <!-- Delete Button at the top-right corner -->
+                                <!-- Category Emoji Link -->
                                 <a class="simple-link" href="/links/{{ category['Category'].id }}">
-                                    <i class="fas fa-folder icon-large mb-3"></i>
+                                    <span class="icon-large mb-3">{{ category['Category'].emoji }}</span>
                                 </a>
 
+                                <!-- Delete Button at the bottom-right corner -->
                                 <button type="button" class="btn-close delete-btn position-absolute bottom-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category['Category'].id }}"></button>
-                                <span class="position-absolute rounded-pill top-0 start-0 badge bg-secondary ms-2 mt-2">{{ category['Link_sum'] }}</span>
+                                
+                                <!-- Link Count Badge -->
+                                <span class="position-absolute rounded-pill top-0 start-0 badge bg-primary ms-2 mt-2 fw-bold">{{ category['Link_sum'] }}</span>
 
-                                <form action="/update_star/{{ category['Category'].id }}" method="POST" id="starForm{{ category['Category'].id }}">
-                                  <!-- Star Button -->
+                                <!-- Star Form -->
+                                <form action="/update_star/{{ category['Category'].id }}" method="POST" id="starForm{{ category['Category'].id }}" class="star-form">
                                   {% if not category['Category'].starred %}
-                                      <button type="submit" class="star-btn position-absolute top-0 end-0 m-2" id="starBtnEmpty{{ category['Category'].id }}"><img class="empty_star ml-auto" src="{{ url_for('static',filename='img/emptyStar.png') }}"></button>
-                                      <input type="hidden" name="starClicked" id="starClickedEmpty{{ category['Category'].id }}" value="true">
+                                      <button type="submit" class="star-btn position-absolute top-0 end-0 m-2" id="starBtnEmpty{{ category['Category'].id }}" title="Add to favorites">
+                                        <img class="empty_star" src="{{ url_for('static',filename='img/emptyStar.png') }}" alt="Empty star">
+                                      </button>
+                                      <input type="hidden" name="starClicked" value="true">
                                   {% else %}
-                                      <button type="submit" class="star-btn position-absolute top-0 end-0 m-2" id="starBtnFilled{{ category['Category'].id }}"><img class="star ml-auto" src="{{ url_for('static',filename='img/filledStar.png') }}"></button>
-                                      <input type="hidden" name="starClicked" id="starClickedFilled{{ category['Category'].id }}" value="false">
+                                      <button type="submit" class="star-btn position-absolute top-0 end-0 m-2" id="starBtnFilled{{ category['Category'].id }}" title="Remove from favorites">
+                                        <img class="star" src="{{ url_for('static',filename='img/filledStar.png') }}" alt="Filled star">
+                                      </button>
+                                      <input type="hidden" name="starClicked" value="false">
                                   {% endif %}
                                 </form>
 
-                                <h5 class="card-title">{{ category['Category'].name }}</h5>
-                                <p class="card-text mb-4">{{ category['Category'].created_date }}</p>
+                                <!-- Category Name and Date -->
+                                <h5 class="card-title fw-bold text-dark mb-1">{{ category['Category'].name }}</h5>
+                                <p class="card-text text-muted small mb-3">{{ category['Category'].created_date }}</p>
 
                                 <!-- Buttons: Open Category and Edit Button -->
-                                <div class="d-flex justify-content-center align-items-center">
+                                <div class="button-container d-flex justify-content-center align-items-center mt-3">
                                     <div class="position-relative">
                                         <!-- Centered Open Category Button -->
-                                        <a href="/links/{{ category['Category'].id }}" class="btn btn-primary d-inline-block mx-auto mt-auto">Open Category</a>
+                                        <a href="/links/{{ category['Category'].id }}" class="btn btn-primary d-inline-block mx-auto btn-modern">Open Category</a>
 
                                         <!-- Edit Button very close to the right of Open Category Button -->
-                                        <a data-bs-toggle="modal" data-bs-target="#updateModal{{ category['Category'].id }}" class="btn btn-light border position-absolute top-50 translate-middle-y" style="right: -50px; width: 40px; height: 40px;" title="Edit Category">
+                                        <a data-bs-toggle="modal" data-bs-target="#updateModal{{ category['Category'].id }}" class="btn btn-light border position-absolute top-50 translate-middle-y btn-edit" style="right: -50px; width: 40px; height: 40px;" title="Edit Category">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </div>
@@ -63,6 +71,42 @@
                                     <div class="modal-body">
                                         <p>Change the name of the category.</p>
                                         <input type="text" class="form-control" name="category_update_name" id="category_update_name" form="updateForm{{ category['Category'].id }}" value="{{category['Category'].name}}">
+                                        <p class="mt-3">Choose an emoji for the category:</p>
+                                        <div class="emoji-picker">
+                                            <select class="form-control" name="category_update_emoji" id="category_update_emoji_{{ category['Category'].id }}" form="updateForm{{ category['Category'].id }}">
+                                                <option value="📁" {% if category['Category'].emoji == '📁' %}selected{% endif %}>📁</option>
+                                                <option value="🎬" {% if category['Category'].emoji == '🎬' %}selected{% endif %}>🎬</option>
+                                                <option value="🎥" {% if category['Category'].emoji == '🎥' %}selected{% endif %}>🎥</option>
+                                                <option value="📺" {% if category['Category'].emoji == '📺' %}selected{% endif %}>📺</option>
+                                                <option value="⭐" {% if category['Category'].emoji == '⭐' %}selected{% endif %}>⭐</option>
+                                                <option value="✨" {% if category['Category'].emoji == '✨' %}selected{% endif %}>✨</option>
+                                                <option value="🎵" {% if category['Category'].emoji == '🎵' %}selected{% endif %}>🎵</option>
+                                                <option value="🎤" {% if category['Category'].emoji == '🎤' %}selected{% endif %}>🎤</option>
+                                                <option value="🎸" {% if category['Category'].emoji == '🎸' %}selected{% endif %}>🎸</option>
+                                                <option value="🎨" {% if category['Category'].emoji == '🎨' %}selected{% endif %}>🎨</option>
+                                                <option value="🎭" {% if category['Category'].emoji == '🎭' %}selected{% endif %}>🎭</option>
+                                                <option value="💻" {% if category['Category'].emoji == '💻' %}selected{% endif %}>💻</option>
+                                                <option value="🎮" {% if category['Category'].emoji == '🎮' %}selected{% endif %}>🎮</option>
+                                                <option value="📚" {% if category['Category'].emoji == '📚' %}selected{% endif %}>📚</option>
+                                                <option value="🔥" {% if category['Category'].emoji == '🔥' %}selected{% endif %}>🔥</option>
+                                                <option value="❤" {% if category['Category'].emoji == '❤' %}selected{% endif %}>❤</option>
+                                                <option value="🚀" {% if category['Category'].emoji == '🚀' %}selected{% endif %}>🚀</option>
+                                                <option value="🏋" {% if category['Category'].emoji == '🏋' %}selected{% endif %}>🏋</option>
+                                                <option value="👕" {% if category['Category'].emoji == '👕' %}selected{% endif %}>👕</option>
+                                                <option value="⚽" {% if category['Category'].emoji == '⚽' %}selected{% endif %}>⚽</option>
+                                                <option value="🧩" {% if category['Category'].emoji == '🧩' %}selected{% endif %}>🧩</option>
+                                                <option value="🎧" {% if category['Category'].emoji == '🎧' %}selected{% endif %}>🎧</option>
+                                                <option value="💊" {% if category['Category'].emoji == '💊' %}selected{% endif %}>💊</option>
+                                                <option value="📷" {% if category['Category'].emoji == '📷' %}selected{% endif %}>📷</option>
+                                                <option value="💵" {% if category['Category'].emoji == '💵' %}selected{% endif %}>💵</option>
+                                                <option value="🥬" {% if category['Category'].emoji == '🥬' %}selected{% endif %}>🥬</option>
+                                                <option value="🌳" {% if category['Category'].emoji == '🌳' %}selected{% endif %}>🌳</option>
+                                                <option value="🚗" {% if category['Category'].emoji == '🚗' %}selected{% endif %}>🚗</option>
+                                                <option value="🏎️" {% if category['Category'].emoji == '🏎️' %}selected{% endif %}>🏎️</option>
+                                                <option value="✈️" {% if category['Category'].emoji == '✈️' %}selected{% endif %}>✈️</option>
+                                                <option value="🏝️" {% if category['Category'].emoji == '🏝️' %}selected{% endif %}>🏝️</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -97,22 +141,15 @@
 
                 <!-- Add New Category Card -->
                     <div class="col-md-4 mb-4 footer-padding">
-                        <div class="card card_min_height border-0 shadow-sm">
+                        <div class="card card_min_height border-0 shadow-lg card-hover-add">
                             <a class="simple-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <div class="card-body text-center d-flex flex-column">
-                                    <i class="fas fa-plus-circle icon-large mb-3"></i>
-                                    <h5 class="card-title mb-4">Add New Category</h5>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <div class="position-relative">
-                                            <!-- Centered Add Category Button -->
-                                            <a class="btn btn-success d-inline-block mx-auto mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Category</a>
-                                        </div>
-                                    </div>
+                                <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fas fa-plus-circle icon-large mb-3 text-success"></i>
+                                    <a class="btn btn-success d-inline-block btn-modern" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Category</a>
                                 </div>
                             </a>
                         </div>
                     </div>
-              </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -126,6 +163,42 @@
                               <div class="modal-body">
                                 <p>Please enter a name for the new category:</p>
                                 <input type="text" class="form-control" name="category_name" id="category_name" form="add_category" placeholder="Category Name">
+                                <p class="mt-3">Choose an emoji for the category:</p>
+                                <div class="emoji-picker">
+                                    <select class="form-control" name="category_emoji" id="category_emoji" form="add_category">
+                                        <option value="📁">📁</option>
+                                        <option value="🎬">🎬</option>
+                                        <option value="🎥">🎥</option>
+                                        <option value="📺">📺</option>
+                                        <option value="⭐">⭐</option>
+                                        <option value="✨">✨</option>
+                                        <option value="🎵">🎵</option>
+                                        <option value="🎤">🎤</option>
+                                        <option value="🎸">🎸</option>
+                                        <option value="🎨">🎨</option>
+                                        <option value="🎭">🎭</option>
+                                        <option value="💻">💻</option>
+                                        <option value="🎮">🎮</option>
+                                        <option value="📚">📚</option>
+                                        <option value="🔥">🔥</option>
+                                        <option value="❤">❤</option>
+                                        <option value="🚀">🚀</option>
+                                        <option value="🏋">🏋</option>
+                                        <option value="👕">👕</option>
+                                        <option value="⚽">⚽</option>
+                                        <option value="🧩">🧩</option>
+                                        <option value="🎧">🎧</option>
+                                        <option value="💊">💊</option>
+                                        <option value="📷">📷</option>
+                                        <option value="💵">💵</option>
+                                        <option value="🥬">🥬</option>
+                                        <option value="🌳">🌳</option>
+                                        <option value="🚗">🚗</option>
+                                        <option value="🏎️">🏎️</option>
+                                        <option value="✈️">✈️</option>
+                                        <option value="🏝️">🏝️</option>
+                                    </select>
+                                </div>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

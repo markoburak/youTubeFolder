@@ -22,26 +22,26 @@
 </head>
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
-        <button class="navbar-toggler ms-4 text-bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-      <div class="collapse navbar-collapse ms-4" id="navbarToggleExternalContent">
-        <div class="navbar-nav">
-          {% if user.is_authenticated %}
-              <a class="nav-item nav-link text-white" id="home_auth" href="/">Home</a>
-          {% else %}
-              <a class="nav-item nav-link text-white" href="/login">Log in</a>
-              <a class="nav-item nav-link text-white" href="/sign_up">Sign up</a>
-          {% endif %}
-        </div>
-        {% if user.is_authenticated %}
-            <div class="navbar-nav ms-auto me-4">
-                <a class="nav-item nav-link text-white" href="/user_details">Account info</a>
-                <a class="nav-item nav-link text-white" id="logout" href="/logout">Logout</a>
+        <div class="container-fluid">
+            <a class="navbar-brand ms-2 ms-md-5" href="/">YouTube Link Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto me-2 me-md-5">
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link text-white" id="home_auth" href="/">Home</a>
+                        <a class="nav-item nav-link text-white" href="/user_details">Account info</a>
+                        <a class="nav-item nav-link text-white" id="logout" href="/logout">Logout</a>
+                    {% else %}
+                        <a class="nav-item nav-link text-white" href="/login">Log in</a>
+                        <a class="nav-item nav-link text-white" href="/sign_up">Sign up</a>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
-      </div>
+        </div>
     </nav>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category,message in messages%}
@@ -70,29 +70,69 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-  <div id="content">
-    {% block content %}{% endblock %}
-  </div>
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 fixed-bottom bg-dark">
-    <div class="col-md-9 d-flex align-items-center">
-      <span class="ms-2 ms-md-5 text-white">
-        {% block footer %}
-        &copy; Copyright 2024 by Marko Burak
-        {% endblock %}
-      </span>
+
+    <div id="content">
+        {% block content %}{% endblock %}
     </div>
-    <div class="col-md-3 d-flex align-items-center">
-      <span class="me-2 me-md-5 ms-auto">
-        V 1.0.1
-      </span>
-    </div>
-  </footer>
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 fixed-bottom bg-dark">
+        <div class="col-md-9 d-flex align-items-center">
+            <span class="ms-2 ms-md-5 text-white">
+                {% block footer %}
+                &copy; Copyright 2024 by Marko Burak
+                {% endblock %}
+            </span>
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+            <span class="me-2 me-md-5 ms-auto">
+                V 1.0.1
+            </span>
+        </div>
+    </footer>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
-    myModal.show();
-  });
+    document.addEventListener('DOMContentLoaded', function () {
+        // Error modal
+        var errorModal = document.getElementById('errorModal');
+        if (errorModal) {
+            var myModal = new bootstrap.Modal(errorModal);
+            myModal.show();
+        }
+
+        var navbarCollapse = document.getElementById('navbarNav');
+        var toggler = document.querySelector('.navbar-toggler');
+        var navLinks = document.querySelectorAll('.navbar-collapse .nav-link');
+        
+        if (toggler && navbarCollapse) {
+            // Initialize as closed
+            navbarCollapse.style.display = 'none';
+            
+            toggler.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                // Simple toggle
+                if (navbarCollapse.style.display === 'none') {
+                    navbarCollapse.style.display = 'block';
+                    navbarCollapse.classList.add('show');
+                } else {
+                    navbarCollapse.style.display = 'none';
+                    navbarCollapse.classList.remove('show');
+                }
+            }, true);
+        }
+        
+        // Close on nav link click
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 992) {
+                    navbarCollapse.style.display = 'none';
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+        });
+    });
 </script>
 
 </body>

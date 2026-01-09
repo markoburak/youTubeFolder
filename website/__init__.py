@@ -12,7 +12,7 @@ def create_app():
 
     # local for testing purposes
     # using local default mysql connection with specified db(already created)
-    local = False
+    local = True
     if local:
         db_host = config.db_host_local
         db_name = config.db_name_local
@@ -28,7 +28,7 @@ def create_app():
 
     # set DB_URI, connect to local DB or hosting DB
     if local:
-        SQLALCHEMY_DATABASE_URI = f"mysql://{db_user}:{db_password}@{db_host}/{db_name}"
+        SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{db_user}:{db_password}@{db_host}/{db_name}"
     else:
         SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
             username=db_user,

@@ -1,45 +1,45 @@
 {% extends "base.html" %}
 {% block optionalCSS %}
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/auth.css') }}">
 {% endblock %}
-{% block title %}Login page{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="bg-secondary ninety-five pt-5">
-        <div class="container p-5 bg-dark">
-                <form method="POST" id="login">
-                  <h3 align="center" class="text-white login_little_spacing">Login</h3>
-                  <div class="form-group mb-1">
-                    <label for="email" class="text-white login_little_spacing">Email Address</label>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Login</h1>
+            
+            <form method="POST" id="login">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
                     <input
-                      type="email"
-                      class="form-control mb-3"
-                      id="email"
-                      name="email"
-                      placeholder="Enter email"
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
                     />
-                  </div>
-                  <div class="form-group mb-1">
-                    <label for="password" class="text-white login_little_spacing">Password</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
                     <input
-                      type="password"
-                      class="form-control mb-3"
-                      id="password"
-                      name="password"
-                      placeholder="Enter password"
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
                     />
-                  </div>
-                </form>
-            <div class="row align-items-end mt-4">
-                <div class="col-12 d-flex align-items-center justify-content-center">
-                    <button type="submit" class="btn btn-primary w-50 py-2 rounded-pill login_spacing login_little_bold" form="login">LOGIN</button>
                 </div>
-            </div>
-            <div class="row align-items-end mt-3 login_little_spacing">
-                <div class="col-12 d-flex align-items-center justify-content-center">
-                    <p class="text-white">Don't have an account?&nbsp;&nbsp;</p><a class="text-decoration-none text-reset" href="/sign_up"><span class="text-white login_little_bold"><u>SIGN UP</u></span></a>
-                </div>
-            </div>
+
+                <button type="submit" class="btn-auth">Login</button>
+            </form>
+
+            <p class="auth-link">
+                Don't have an account? <a href="/sign_up">Sign up here</a>
+            </p>
         </div>
     </div>
 {% endblock %}

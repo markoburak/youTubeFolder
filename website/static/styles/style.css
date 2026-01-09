@@ -1,7 +1,23 @@
-body, html {
+html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.bg-gradient-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding-bottom: 3rem;
+}
+
+body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll as well */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex: 1;
 }
 
 a {
@@ -83,6 +99,16 @@ multiple selector options
       width: 30vw;
     }
 
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+    margin: 0;
 }
 
 
