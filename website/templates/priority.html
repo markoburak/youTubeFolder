@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block optionalCSS %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/youtubelink.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/priority.css') }}">
+{% endblock %}
+{% block title %}Priority List{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-modern ninety-five">
+  <div class="container-fluid py-4">
+    <div class="row align-items-center justify-content-center mb-4">
+      <div class="col-12 text-center">
+        <span class="priority-page-icon mb-3" aria-hidden="true"><i class="fa fa-flag"></i></span>
+        <h1 class="text-white fw-bold mb-2">Priority List</h1>
+        <p class="text-white-50 mb-0">Important videos from all your categories</p>
+      </div>
+    </div>
+
+    <div class="container mb-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-2 col-md-4 col-12">
+          <a href="{{ url_for('category_view.index') }}" class="btn btn-light btn-back w-100">
+            <i class="fa fa-arrow-left me-2"></i>Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid px-4">
+      <div class="row gallery g-4 pb-4">
+        {% for link, category in priority_links %}
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+            <div class="link-card position-relative">
+              <div class="image-wrapper position-relative overflow-hidden">
+                <img src="{{ link.img_url }}" class="img-fluid w-100" alt="{{ link.title }}">
+
+                <span class="priority-indicator position-absolute top-0 start-0 m-2" title="Priority video" aria-label="Priority video">
+                  <i class="fa fa-flag"></i>
+                </span>
+
+                <div class="title-overlay priority-title-overlay position-absolute bottom-0 start-0 end-0 p-3 bg-gradient-dark">
+                  <a
+                    href="{{ url_for('links_view.youTubeLinks', category_id=category.id) }}"
+                    class="source-category-badge"
+                    title="Open {{ category.name }} category"
+                  >
+                    <i class="fa fa-folder me-1"></i>{{ category.name }}
+                  </a>
+                  <p class="text-white fw-bold mb-0 mt-2 text-truncate">{{ link.title or '' }}</p>
+                </div>
+
+                <button type="button" class="btn-close btn-close-white delete-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deletePriorityLinkModal{{ link.id }}" aria-label="Delete video"></button>
+
+                <a data-bs-toggle="modal" data-bs-target="#updatePriorityModal{{ link.id }}" class="btn btn-sm btn-edit position-absolute bottom-0 end-0 m-2" title="Edit video">
+                  <i class="fa fa-edit"></i>
+                </a>
+
+                <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="link-overlay stretched-link" aria-label="Open {{ link.title or 'video' }} on YouTube"></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="updatePriorityModal{{ link.id }}" tabindex="-1" aria-labelledby="updatePriorityModalLabel{{ link.id }}" aria-hidden="true">
+            <form action="{{ url_for('links_view.update_link', link_id=link.id) }}" method="POST" id="updatePriorityForm{{ link.id }}">
+              <input type="hidden" name="redirect_to" value="priority">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="updatePriorityModalLabel{{ link.id }}">Edit Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Update the title for this link:</p>
+                    <input type="text" class="form-control" name="link_update_name" value="{{ link.title }}">
+                    <div class="form-check form-switch mt-4">
+                      <input class="form-check-input" type="checkbox" role="switch" name="is_priority" value="true" id="priorityPageSwitch{{ link.id }}" checked>
+                      <label class="form-check-label fw-semibold" for="priorityPageSwitch{{ link.id }}">Keep in priority list</label>
+                      <div class="form-text">Turn this off to remove the video from this page.</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal fade" id="deletePriorityLinkModal{{ link.id }}" tabindex="-1" aria-labelledby="deletePriorityLinkModalLabel{{ link.id }}" aria-hidden="true">
+            <form action="{{ url_for('links_view.remove_link', link_id=link.id) }}" method="POST">
+              <input type="hidden" name="redirect_to" value="priority">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deletePriorityLinkModalLabel{{ link.id }}">Delete "{{ link.title or 'Video' }}"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this link?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        {% else %}
+          <div class="col-12 text-center py-5 empty-priority-state">
+            <h2 class="text-white">No priority videos yet</h2>
+            <p class="text-white-50 mt-2">Open a video’s edit menu and turn on “Add to priority list.”</p>
+            <a href="{{ url_for('category_view.index') }}" class="btn btn-light browse-categories-button d-inline-flex mt-3">
+              <i class="fa fa-folder-open me-2" aria-hidden="true"></i>Browse Categories
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

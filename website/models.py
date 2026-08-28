@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
 
 
 class Category(db.Model):
-    __tablename__ = "Category"
+    __tablename__ = "category"
 
     id = db.Column(db.Integer, primary_key=True)
     starred = db.Column(db.Boolean, default=False)
@@ -30,11 +30,12 @@ class Category(db.Model):
 # https://img.youtube.com/vi/".$video_id."/hqdefault.jpg
 
 class YouTubeLink(db.Model):
-    __tablename__ = "youTubeLink"
+    __tablename__ = "youtubelink"
 
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(400))
     img_url = db.Column(db.String(400))
     title = db.Column(db.String(400))
+    is_priority = db.Column(db.Boolean, nullable=False, default=False, server_default=db.false())
     created_date = db.Column(db.Date(), default=func.now())
-    category_id = db.Column(db.Integer, db.ForeignKey('Category.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))

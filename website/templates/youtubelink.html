@@ -54,7 +54,13 @@
             <div class="link-card position-relative">
               <div class="image-wrapper position-relative overflow-hidden">
                 <img src="{{ link.img_url }}" class="img-fluid w-100" alt="{{ link.title }}">
-                
+
+                {% if link.is_priority %}
+                  <span class="priority-indicator position-absolute top-0 start-0 m-2" title="Priority video" aria-label="Priority video">
+                    <i class="fas fa-flag"></i>
+                  </span>
+                {% endif %}
+
                 <!-- Title Overlay -->
                 <div class="title-overlay position-absolute bottom-0 start-0 end-0 p-3 bg-gradient-dark">
                   <p class="text-white fw-bold mb-0 text-truncate">{{ link.title }}</p>
@@ -86,6 +92,22 @@
                           <div class="modal-body">
                               <p>Update the title for this link:</p>
                               <input type="text" class="form-control" name="link_update_name" id="link_update_name" form="updateForm{{ link.id }}" value="{{link.title}}">
+                              <div class="form-check form-switch mt-4">
+                                  <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      role="switch"
+                                      name="is_priority"
+                                      value="true"
+                                      id="prioritySwitch{{ link.id }}"
+                                      form="updateForm{{ link.id }}"
+                                      {% if link.is_priority %}checked{% endif %}
+                                  >
+                                  <label class="form-check-label fw-semibold" for="prioritySwitch{{ link.id }}">
+                                      Add to priority list
+                                  </label>
+                                  <div class="form-text">Turn this off to remove the video from the priority list.</div>
+                              </div>
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

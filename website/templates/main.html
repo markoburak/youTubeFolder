@@ -210,6 +210,29 @@
                     </div>
 
                 </div>
+
+                <section class="priority-shortcut mt-3 mb-5" aria-labelledby="priorityShortcutTitle">
+                    <p class="priority-section-label mb-2">Quick access</p>
+                    <div class="priority-shortcut-card d-flex flex-column flex-md-row align-items-md-center gap-3">
+                        <div class="d-flex align-items-center gap-3 flex-grow-1">
+                            <span class="priority-shortcut-icon" aria-hidden="true">
+                                <i class="fas fa-flag"></i>
+                            </span>
+                            <div>
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <h2 class="priority-shortcut-title mb-0" id="priorityShortcutTitle">Priority List</h2>
+                                    <span class="priority-shortcut-count">{{ priority_count }}</span>
+                                </div>
+                                <p class="priority-shortcut-description mb-0 mt-1">
+                                    Videos you mark as priority from any category appear here.
+                                </p>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('links_view.priority') }}" class="btn priority-shortcut-button flex-shrink-0">
+                            View list <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </section>
             </div>
         </div>
 

@@ -41,6 +41,83 @@ body {
     transform: scale(1.1) rotate(5deg);
 }
 
+/* Secondary priority-list shortcut */
+.priority-shortcut {
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.priority-section-label {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.priority-shortcut-card {
+    padding: 1rem 1.15rem;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(31, 41, 55, 0.12);
+}
+
+.priority-shortcut-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+    color: #b42332;
+    background: #f9e6e8;
+    border-radius: 9px;
+    font-size: 0.95rem;
+}
+
+.priority-shortcut-title {
+    color: #2d3748;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.priority-shortcut-count {
+    min-width: 24px;
+    padding: 0.15rem 0.45rem;
+    color: #6b2630;
+    background: #f4d8dc;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.priority-shortcut-description {
+    color: #718096;
+    font-size: 0.82rem;
+}
+
+.priority-shortcut-button {
+    color: #4a5568;
+    background: transparent;
+    border: 1px solid #cbd5e0;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.5rem 0.8rem;
+}
+
+.priority-shortcut-button:hover,
+.priority-shortcut-button:focus {
+    color: #2d3748;
+    background: #f7fafc;
+    border-color: #a0aec0;
+}
+
 /* Add category card styling */
 .card-hover-add {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

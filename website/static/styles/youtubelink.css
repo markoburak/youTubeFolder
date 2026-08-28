@@ -148,6 +148,23 @@ h1 {
     text-decoration: none;
 }
 
+/* Priority controls */
+.priority-indicator {
+    z-index: 4;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(135deg, #ff4d5e 0%, #c9182b 100%);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    font-size: 0.82rem;
+    box-shadow: 0 3px 10px rgba(201, 24, 43, 0.45);
+    pointer-events: none;
+}
+
 /* Edit button */
 .btn-edit {
     background: #667eea;

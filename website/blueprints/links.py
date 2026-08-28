@@ -24,6 +24,24 @@ def youTubeLinks(category_id):
     return render_template("youtubelink.html", user=current_user, category=category, links=youTubeLinksAll)
 
 
+@links_view.route("/priority", methods=["GET"])
+@login_required
+def priority():
+    priority_links = (
+        db.session.query(YouTubeLink, Category)
+        .join(Category, YouTubeLink.category_id == Category.id)
+        .filter(Category.user_id == current_user.id, YouTubeLink.is_priority.is_(True))
+        .order_by(YouTubeLink.created_date.desc(), YouTubeLink.id.desc())
+        .all()
+    )
+
+    return render_template(
+        "priority.html",
+        user=current_user,
+        priority_links=priority_links,
+    )
+
+
 @links_view.route("/add_link/<int:category_id>", methods=["POST"])
 @login_required
 def add_link(category_id):
@@ -86,17 +104,23 @@ def add_link(category_id):
 @links_view.route("/remove_link/<int:link_id>", methods=["POST"])
 @login_required
 def remove_link(link_id):
-    # Find the link by ID
-    link_to_delete = YouTubeLink.query.filter_by(id=link_id).first()
-    category_id = link_to_delete.category_id
+    link_to_delete = (
+        YouTubeLink.query
+        .join(Category, YouTubeLink.category_id == Category.id)
+        .filter(YouTubeLink.id == link_id, Category.user_id == current_user.id)
+        .first()
+    )
 
-    if link_to_delete:
-        # Remove the category from the database
-        db.session.delete(link_to_delete)
-        db.session.commit()
-        # flash('Link deleted!', category='success')
-    else:
+    if not link_to_delete:
         flash('Link not found!', category='error')
+        return redirect(url_for('category_view.index'))
+
+    category_id = link_to_delete.category_id
+    db.session.delete(link_to_delete)
+    db.session.commit()
+
+    if request.form.get('redirect_to') == 'priority':
+        return redirect(url_for('links_view.priority'))
 
     return redirect(url_for('links_view.youTubeLinks', category_id=category_id))
 
@@ -109,16 +133,22 @@ def back_to_category():
 @links_view.route("/update_link/<int:link_id>", methods=["POST"])
 @login_required
 def update_link(link_id):
-    # Find the link by ID and ensure it belongs to the current user
-    link_to_update = YouTubeLink.query.filter_by(id=link_id).first()
-    category_id = link_to_update.category_id
+    link_to_update = (
+        YouTubeLink.query
+        .join(Category, YouTubeLink.category_id == Category.id)
+        .filter(YouTubeLink.id == link_id, Category.user_id == current_user.id)
+        .first()
+    )
 
-    if link_to_update:
-        title_to_update = request.form.get('link_update_name')
-        link_to_update.title = title_to_update
-        db.session.commit()
-        # flash('Category updated!', category='success')
-    else:
-        flash('Category not found!', category='error')
+    if not link_to_update:
+        flash('Link not found!', category='error')
+        return redirect(url_for('category_view.index'))
 
-    return redirect(url_for('links_view.youTubeLinks', category_id=category_id))
+    link_to_update.title = request.form.get('link_update_name')
+    link_to_update.is_priority = request.form.get('is_priority') == 'true'
+    db.session.commit()
+
+    if request.form.get('redirect_to') == 'priority':
+        return redirect(url_for('links_view.priority'))
+
+    return redirect(url_for('links_view.youTubeLinks', category_id=link_to_update.category_id))

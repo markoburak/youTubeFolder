@@ -28,7 +28,19 @@ def index():
         reverse=True
     )
 
-    return render_template("main.html", user=current_user, categories=links_by_category_sorted)
+    priority_count = (
+        db.session.query(func.count(YouTubeLink.id))
+        .join(Category, YouTubeLink.category_id == Category.id)
+        .filter(Category.user_id == current_user.id, YouTubeLink.is_priority.is_(True))
+        .scalar()
+    )
+
+    return render_template(
+        "main.html",
+        user=current_user,
+        categories=links_by_category_sorted,
+        priority_count=priority_count,
+    )
 
 
 @category_view.route("/add_category", methods=["POST"])
